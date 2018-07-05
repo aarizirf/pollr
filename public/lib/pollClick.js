@@ -1,12 +1,10 @@
-var status1 = 0;
-var status2 = 0;
-
 $(".option1").on("click", function() {
   console.log("option 1 was clicked for poll with id " + $(this).attr("id"));
+  var pollID = $(this).attr("id");
   //   $(this)
   //     .closest(".card")
   //     .slideUp();
-  fetch("/polls/" + $(this).attr("id") + "/1", { method: "POST" })
+  fetch("/polls/" + pollID + "/1", { method: "POST" })
     .then(function(response) {
       if (response.ok) {
         console.log("click recorded");
@@ -18,24 +16,59 @@ $(".option1").on("click", function() {
       console.log(error);
     });
 
-  // Animation
-  $(this).css("width", $(this).attr("towidth") + "%");
-  $(this)
+  //HANDLE ANIMATION
+
+  var button1ToWidth = $(this).attr("towidth");
+  var button2ToWidth = $(this)
     .siblings()
-    .css(
-      "width",
-      $(this)
-        .siblings()
-        .attr("towidth") + "%"
+    .attr("towidth");
+
+  if (button1ToWidth == 0) {
+    $(this).css("display", "none");
+    $(this)
+      .siblings()
+      .html("100%")
+      .fadeIn("fast");
+  } else if (button2ToWidth == 0) {
+    $(this)
+      .siblings()
+      .css("display", "none");
+    $(this)
+      .html("100%")
+      .fadeIn("slow");
+  } else {
+    $(this).animate(
+      {
+        width: button1ToWidth + "%"
+      },
+      function() {
+        $(this)
+          .html(Math.round(button1ToWidth) + "%")
+          .fadeIn("slow");
+      }
     );
+    $(this)
+      .siblings()
+      .animate(
+        {
+          width: button2ToWidth + "%"
+        },
+        function() {
+          $(this)
+            .html(Math.round(button2ToWidth) + "%")
+            .fadeIn("fast");
+        }
+      );
+  }
 });
 
-$(".option2").on("click", function() {
+$(".option1").on("click", function() {
   console.log("option 2 was clicked for poll with id " + $(this).attr("id"));
+  var pollID = $(this).attr("id");
   //   $(this)
   //     .closest(".card")
   //     .slideUp();
-  fetch("/polls/" + $(this).attr("id") + "/2", { method: "POST" })
+  fetch("/polls/" + pollID + "/2", { method: "POST" })
     .then(function(response) {
       if (response.ok) {
         console.log("click recorded");
@@ -47,14 +80,48 @@ $(".option2").on("click", function() {
       console.log(error);
     });
 
-  // Animation
-  $(this).css("width", $(this).attr("towidth") + "%");
-  $(this)
+  //HANDLE ANIMATION
+
+  var button2ToWidth = $(this).attr("towidth");
+  var button1ToWidth = $(this)
     .siblings()
-    .css(
-      "width",
-      $(this)
-        .siblings()
-        .attr("towidth") + "%"
+    .attr("towidth");
+
+  if (button2ToWidth == 0) {
+    $(this).css("display", "none");
+    $(this)
+      .siblings()
+      .html("100%")
+      .fadeIn("fast");
+  } else if (button1ToWidth == 0) {
+    $(this)
+      .siblings()
+      .css("display", "none");
+    $(this)
+      .html("100%")
+      .fadeIn("slow");
+  } else {
+    $(this).animate(
+      {
+        width: button2ToWidth + "%"
+      },
+      function() {
+        $(this)
+          .html(Math.round(button2ToWidth) + "%")
+          .fadeIn("slow");
+      }
     );
+    $(this)
+      .siblings()
+      .animate(
+        {
+          width: button1ToWidth + "%"
+        },
+        function() {
+          $(this)
+            .html(Math.round(button1ToWidth) + "%")
+            .fadeIn("fast");
+        }
+      );
+  }
 });

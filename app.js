@@ -87,21 +87,31 @@ app.post("/polls/new", middleware.isLoggedIn, function(req, res) {
   });
 });
 
-//POLL DELETE
+//POLL DELETE -- check ownership later
+app.get("/polls/:id/delete", function(req, res) {
+  Poll.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/polls/home");
+    }
+  });
+});
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ADD WHO ANSWERED TO THIS HERE
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Do not allow same user to answer poll two times in a row, kept for debugging purposes
 //POLL CHOICE 1 -- GO INTO DB
-app.post("/polls/:id/1", middleware.isLoggedIn, function(req, res) {
-  var answeredBy = {
-    id: req.user._id,
-    username: req.user.username
-  };
+app.post("/polls/:id/1", function(req, res) {
+  //   var answeredBy = {
+  //     id: req.user._id,
+  //     username: req.user.username
+  //   };
+
+  console.log(req.params.id);
 
   Poll.findByIdAndUpdate(
     req.params.id,
     {
-      $inc: { "pollOption1.votes": 1 },
-      $push: { "poll.answersFrom": answeredBy }
+      $inc: { "pollOption1.votes": 1 }
     },
     function(err) {
       if (err) {
@@ -112,17 +122,18 @@ app.post("/polls/:id/1", middleware.isLoggedIn, function(req, res) {
 });
 
 //POLL CHOICE 2 -- GO INTO DB
-app.post("/polls/:id/2", middleware.isLoggedIn, function(req, res) {
-  var answeredBy = {
-    id: req.user._id,
-    username: req.user.username
-  };
+app.post("/polls/:id/2", function(req, res) {
+  //   var answeredBy = {
+  //     id: req.user._id,
+  //     username: req.user.username
+  //   };
+
+  console.log(req.params.id);
 
   Poll.findByIdAndUpdate(
     req.params.id,
     {
-      $inc: { "pollOption2.votes": 1 },
-      $push: { "poll.answersFrom": answeredBy }
+      $inc: { "pollOption2.votes": 1 }
     },
     function(err) {
       if (err) {

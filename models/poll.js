@@ -5,14 +5,17 @@ var PollSchema = new mongoose.Schema({
 
   pollOption1: {
     text: String,
-    votes: { type: Number, default: 19 }
+    votes: { type: Number, default: 0 }
   },
   pollOption2: {
     text: String,
-    votes: { type: Number, default: 10 }
+    votes: { type: Number, default: 0 }
   },
 
-  approved: { type: Boolean, default: false },
+  approved: {
+    type: Boolean,
+    default: false
+  },
   answersFrom: [
     {
       id: {

@@ -37,3 +37,17 @@
   outline: none !important;
   box-shadow: none;
 }
+
+.delete-button {
+  position: absolute !important;
+  right: 13px;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+}
+
+.option1,
+.option2 {
+  position: absolute;
+}
