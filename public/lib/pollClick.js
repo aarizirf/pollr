@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////////////////////////////REFACTOR WITH FUNCTIONS!
+
 $(".option1").on("click", function() {
   console.log("option 1 was clicked for poll with id " + $(this).attr("id"));
   var pollID = $(this).attr("id");
@@ -16,8 +18,13 @@ $(".option1").on("click", function() {
       console.log(error);
     });
 
-  //HANDLE ANIMATION
+  //ADD DISABLED CLASS
+  $(this).prop("disabled", true);
+  $(this)
+    .siblings()
+    .prop("disabled", true);
 
+  //HANDLE ANIMATION
   var button1ToWidth = $(this).attr("towidth");
   var button2ToWidth = $(this)
     .siblings()
@@ -62,7 +69,7 @@ $(".option1").on("click", function() {
   }
 });
 
-$(".option1").on("click", function() {
+$(".option2").on("click", function() {
   console.log("option 2 was clicked for poll with id " + $(this).attr("id"));
   var pollID = $(this).attr("id");
   //   $(this)
@@ -80,8 +87,13 @@ $(".option1").on("click", function() {
       console.log(error);
     });
 
-  //HANDLE ANIMATION
+  //ADD DISABLED CLASS
+  $(this).addClass("disabled");
+  $(this)
+    .siblings()
+    .addClass("disabled");
 
+  //HANDLE ANIMATION
   var button2ToWidth = $(this).attr("towidth");
   var button1ToWidth = $(this)
     .siblings()

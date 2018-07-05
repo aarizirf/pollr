@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h5 class="display-3">Create Topic</h5>
+            <p class="lead">Create this topic to add polls to! Make sure your topic is unique!</p>
+        </div>
+    </div>
+
+    <form action="/topics/new" method="POST">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label for="question">Topic Name</label>
+                        <input id="question" type="text" name="name" class="form-control p-3 border-dark" placeholder="Basketball, Trump Laws, Stranger Things"
+                            required>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <textarea class="form-control border-dark" rows="3" name="description" placeholder="Topic Description" required></textarea>
+                    </div>
+
+                    <button class="btn btn-outline-info btn-block py-2 mt-4">Create Poll!</button>
+                    <p class="text-muted mt-3">Your topic will be on wait for approval until it is released.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <% include ../partials/footer %>

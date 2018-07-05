@@ -11,6 +11,13 @@ var PollSchema = new mongoose.Schema({
     text: String,
     votes: { type: Number, default: 0 }
   },
+  topic: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Topic"
+    },
+    name: String
+  },
 
   approved: {
     type: Boolean,

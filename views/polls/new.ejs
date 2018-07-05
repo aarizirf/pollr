@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form action="/polls/new" method="POST">
+    <form action="/polls/new" method="POST" id="newPollForm">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
@@ -20,6 +20,18 @@
                     <div class="input-group mt-3">
                         <input type="text" name="pollOption1" class="form-control p-3 border-success" placeholder="Option 1 (Yes)" required>
                         <input type="text" name="pollOption2" class="form-control p-3 border-danger" placeholder="Option 2 (No)" required>
+                    </div>
+
+                    <p class="mt-4">Choose topic</p>
+                    <div class="input-group mt-0">
+
+                        <select id="topic" class="custom-select" name="topicSelect" form="newPollForm">
+                            <% topics.forEach(function(topic) { %>
+                                <option>
+                                    <%= topic.name %>
+                                </option>
+                                <% }) %>
+                        </select>
                     </div>
 
                     <button class="btn btn-outline-info btn-block py-2 mt-4">Create Poll!</button>

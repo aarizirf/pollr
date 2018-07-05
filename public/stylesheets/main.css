@@ -51,3 +51,9 @@
 .option2 {
   position: absolute;
 }
+
+.from-topic {
+  display: inline;
+  position: absolute;
+  right: 12px;
+}

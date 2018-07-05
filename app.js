@@ -10,6 +10,12 @@ var express = require("express"),
 //MODELS
 var User = require("./models/user");
 var Poll = require("./models/poll");
+var Topic = require("./models/topic");
+
+//ROUTES
+var pollRoutes = require("./routes/polls");
+var userRoutes = require("./routes/users");
+var topicRoutes = require("./routes/topics");
 
 //OTHER
 var middleware = require("./middleware");
@@ -39,150 +45,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+//INCLUDE ROUTES
+app.use(pollRoutes);
+app.use(userRoutes);
+app.use(topicRoutes);
+
 // BASE ROUTE
 app.get("/", function(req, res) {
   res.redirect("/polls/home");
-});
-
-//HOME ROUTE -- INDEX ROUTE FOR TOPICS FOLLOWED
-app.get("/polls/home", middleware.isLoggedIn, function(req, res) {
-  Poll.find({}, function(err, allPolls) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("polls/home", { polls: allPolls });
-    }
-  });
-});
-
-//NEW POLL ROUTE
-app.get("/polls/new", middleware.isLoggedIn, function(req, res) {
-  res.render("polls/new");
-});
-
-//NEW POLL LOGIC ROUTE
-app.post("/polls/new", middleware.isLoggedIn, function(req, res) {
-  var newPoll = {
-    question: req.body.question,
-    pollOption1: {
-      text: req.body.pollOption1
-    },
-    pollOption2: {
-      text: req.body.pollOption2
-    },
-    author: {
-      id: req.user._id,
-      username: req.user.username
-    }
-  };
-
-  Poll.create(newPoll, function(err, newlyCreated) {
-    if (err) {
-      // error happens
-      console.log(err);
-    } else {
-      // poll created
-      res.redirect("/");
-    }
-  });
-});
-
-//POLL DELETE -- check ownership later
-app.get("/polls/:id/delete", function(req, res) {
-  Poll.findByIdAndRemove(req.params.id, function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/polls/home");
-    }
-  });
-});
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Do not allow same user to answer poll two times in a row, kept for debugging purposes
-//POLL CHOICE 1 -- GO INTO DB
-app.post("/polls/:id/1", function(req, res) {
-  //   var answeredBy = {
-  //     id: req.user._id,
-  //     username: req.user.username
-  //   };
-
-  console.log(req.params.id);
-
-  Poll.findByIdAndUpdate(
-    req.params.id,
-    {
-      $inc: { "pollOption1.votes": 1 }
-    },
-    function(err) {
-      if (err) {
-        console.log(err);
-      }
-    }
-  );
-});
-
-//POLL CHOICE 2 -- GO INTO DB
-app.post("/polls/:id/2", function(req, res) {
-  //   var answeredBy = {
-  //     id: req.user._id,
-  //     username: req.user.username
-  //   };
-
-  console.log(req.params.id);
-
-  Poll.findByIdAndUpdate(
-    req.params.id,
-    {
-      $inc: { "pollOption2.votes": 1 }
-    },
-    function(err) {
-      if (err) {
-        console.log(err);
-      }
-    }
-  );
-});
-
-//REGISTER ROUTE
-app.get("/register", function(req, res) {
-  res.render("users/register");
-});
-
-// REGISTER LOGIC ROUTE
-app.post("/register", function(req, res) {
-  var newUser = new User({
-    username: req.body.username,
-    email: req.body.email
-  });
-  User.register(newUser, req.body.password, function(err, user) {
-    if (err) {
-      console.log(err);
-    }
-    passport.authenticate("local")(req, res, function() {
-      res.redirect("/");
-    });
-  });
-});
-
-//LOGIN ROUTE
-app.get("/login", function(req, res) {
-  res.render("users/login");
-});
-
-//LOGIN LOGIC ROUTE
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login"
-  }),
-  function(req, res) {}
-);
-
-// LOGOUT ROUTE
-app.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect("/");
 });
 
 // SERVER STARTED
