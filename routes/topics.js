@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Topic = require("../models/topic");
+var Poll = require("../models/poll");
 var middleware = require("../middleware");
 
 //NEW TOPIC GET ROUTE
@@ -28,6 +29,27 @@ router.post("/topics/new", middleware.isLoggedIn, function(req, res) {
       res.redirect("/");
     }
   });
+});
+
+//TOPIC INDEX GET ROUTE
+router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
+  Topic.findOneAndUpdate(
+    { name: req.params.name },
+    { $inc: { views: 1 } },
+    function(err, topic) {
+      if (err) {
+        console.log(err);
+      } else {
+        Poll.find({ "topic.name": topic.name }, function(err, foundPolls) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("topics/show", { topic: topic, polls: foundPolls });
+          }
+        });
+      }
+    }
+  );
 });
 
 module.exports = router;

@@ -32,8 +32,6 @@ router.post("/polls/new", middleware.isLoggedIn, function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(foundTopic);
-
       var newPoll = {
         question: req.body.question,
         pollOption1: {
@@ -52,8 +50,6 @@ router.post("/polls/new", middleware.isLoggedIn, function(req, res) {
         }
       };
 
-      console.log(newPoll);
-
       Poll.create(newPoll, function(err, newlyCreated) {
         if (err) {
           // error happens
@@ -68,7 +64,7 @@ router.post("/polls/new", middleware.isLoggedIn, function(req, res) {
 });
 
 //POLL DELETE -- check ownership later
-router.get("/polls/:id/delete", function(req, res) {
+router.get("/polls/:id/delete", middleware.isLoggedIn, function(req, res) {
   Poll.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
       console.log(err);
@@ -80,13 +76,11 @@ router.get("/polls/:id/delete", function(req, res) {
 
 //Do not allow same user to answer poll two times in a row, kept for debugging purposes
 //POLL CHOICE 1 -- GO INTO DB
-router.post("/polls/:id/1", function(req, res) {
+router.post("/polls/:id/1", middleware.isLoggedIn, function(req, res) {
   //   var answeredBy = {
   //     id: req.user._id,
   //     username: req.user.username
   //   };
-
-  console.log(req.params.id);
 
   Poll.findByIdAndUpdate(
     req.params.id,
@@ -102,13 +96,11 @@ router.post("/polls/:id/1", function(req, res) {
 });
 
 //POLL CHOICE 2 -- GO INTO DB
-router.post("/polls/:id/2", function(req, res) {
+router.post("/polls/:id/2", middleware.isLoggedIn, function(req, res) {
   //   var answeredBy = {
   //     id: req.user._id,
   //     username: req.user.username
   //   };
-
-  console.log(req.params.id);
 
   Poll.findByIdAndUpdate(
     req.params.id,

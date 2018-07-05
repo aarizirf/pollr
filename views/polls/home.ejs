@@ -17,9 +17,7 @@
                     <strong>
                         <%= poll.author.username %>
                     </strong>
-                    <span class="badge badge-dark pull-right">
-                        <%= moment(poll.createdAt).fromNow() %>
-                    </span>
+
                     <a id="<%= poll._id %>" class="delete-button">
                         <i class="fas fa-trash-alt"></i>
                     </a>
@@ -40,14 +38,18 @@
                             </div>
                         </div>
                     </div>
-                    <span class="mt-3 badge badge-pill badge-info">
-                        <%= poll.pollOption1.votes + poll.pollOption2.votes %> votes
-                    </span>
-                    <p class="text-muted from-topic mt-2">-
-                        <strong>
+                    <div class="badges mt-2">
+                        <a href="/topics/<%= poll.topic.name %>/" class="badge badge-pill badge-success">
                             <%= poll.topic.name %>
-                        </strong>
-                    </p>
+                        </a>
+                        <span class="badge badge-pill badge-info">
+                            <%= poll.pollOption1.votes + poll.pollOption2.votes %> votes
+                        </span>
+                        <span class="badge badge-pill badge-dark">
+                            <%= moment(poll.createdAt).fromNow() %>
+                        </span>
+                    </div>
+
                 </div>
             </div>
             <% }) %>

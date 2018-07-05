@@ -10,6 +10,10 @@ var TopicSchema = new mongoose.Schema({
     },
     username: String
   },
+  views: {
+    type: Number,
+    default: 0
+  },
   approved: {
     type: Boolean,
     default: false

@@ -1,11 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////REFACTOR WITH FUNCTIONS!
 
 $(".option1").on("click", function() {
-  console.log("option 1 was clicked for poll with id " + $(this).attr("id"));
   var pollID = $(this).attr("id");
-  //   $(this)
-  //     .closest(".card")
-  //     .slideUp();
+
   fetch("/polls/" + pollID + "/1", { method: "POST" })
     .then(function(response) {
       if (response.ok) {
@@ -72,9 +69,6 @@ $(".option1").on("click", function() {
 $(".option2").on("click", function() {
   console.log("option 2 was clicked for poll with id " + $(this).attr("id"));
   var pollID = $(this).attr("id");
-  //   $(this)
-  //     .closest(".card")
-  //     .slideUp();
   fetch("/polls/" + pollID + "/2", { method: "POST" })
     .then(function(response) {
       if (response.ok) {
