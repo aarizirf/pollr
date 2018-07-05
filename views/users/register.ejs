@@ -1,0 +1,38 @@
+<% include ../partials/header %>
+
+<div class="user-form">
+    <form action="/register" method="POST">
+        <h2 class="text-center">Sign Up</h2>       
+        <div class="control-group mb-2">
+            <input id="email" name="email" class="form-control" type="text" placeholder="Email" class="input-large" required>
+        </div>
+        
+        <!-- Text input-->
+        <div class="control-group mb-2">
+            <input id="username" name="username" class="form-control" type="text" placeholder="Username" class="input-large" required>
+        </div>
+        
+        <!-- Password input-->
+        <div class="control-group mb-2">
+            <input id="password" name="password" class="form-control" type="password" placeholder="Password" class="input-large" required>
+        </div>
+        
+        <!-- Text input-->
+        <div class="control-group mb-2">
+            <input id="confirmPassword" class="form-control" name="confirmPassword" type="password" placeholder="Confirm password" class="input-large" required>
+            <div id="confirmPasswordInvalidFeedback" class="invalid-feedback">
+            </div>
+        </div>
+        
+        <!-- Button -->
+        <div class="control-group">
+            <input id="submitBtn" type="submit" value="Sign Up" class="btn btn-outline-primary btn-block">
+        </div>
+    </form>
+</div>
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script src="/lib/register.js"></script>
+
+<% include ../partials/footer %>

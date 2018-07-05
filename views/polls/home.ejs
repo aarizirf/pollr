@@ -1,5 +1,55 @@
 <% include ../partials/header %>
 
-<h1>Pollr!</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-1 text-center">POLLR!</h1>
+            <p class="lead">Hello
+                <%= currentUser.username %>
+            </p>
+        </div>
+    </div>
 
-<% include ../partials/footer %>
+    <div class="container">
+        <% polls.forEach(function(poll) { %>
+            <div class="card mb-5">
+                <div class="card-header">
+                    Created by
+                    <strong>
+                        <%= poll.author.username %>
+                    </strong>
+                    <span class="badge badge-light">
+                        <%= moment(poll.createdAt).fromNow() %>
+                    </span>
+                    <a href="/polls/<%= poll._id %>/delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+                <div class="w-100 card-body">
+                    <h4 class="card-title text-center">
+                        <%= poll.question %>
+                    </h4>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 offset-md-3">
+                            <div class="input-group">
+                                <button id="<%=poll._id%>" class="option1 form-control btn btn-outline-secondary" towidth="<%= (poll.pollOption1.votes/(poll.pollOption1.votes+poll.pollOption2.votes))*100 %>">
+                                    <%= poll.pollOption1.text %>
+                                </button>
+                                <button id="<%=poll._id%>" class="option2 form-control btn btn-outline-secondary" towidth="<%= (poll.pollOption2.votes/(poll.pollOption1.votes+poll.pollOption2.votes))*100 %>">
+                                    <%= poll.pollOption2.text %>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="mt-2 badge badge-pill badge-info">
+                        <%= poll.pollOption1.votes + poll.pollOption2.votes %> votes
+                    </span>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="/lib/pollClick.js"></script>
+
+    <% include ../partials/footer %>

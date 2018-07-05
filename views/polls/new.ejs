@@ -1,0 +1,33 @@
+<% include ../partials/header %>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h5 class="display-3">Create Poll</h5>
+            <p class="lead">Make your own poll for others to answer!</p>
+        </div>
+    </div>
+
+    <form action="/polls/new" method="POST">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="form-group">
+                        <label for="question">Question</label>
+                        <input id="question" type="text" name="question" class="form-control p-3 border-dark" placeholder="Should handball become an olympic sport?"
+                            required>
+                    </div>
+
+                    <div class="input-group mt-3">
+                        <input type="text" name="pollOption1" class="form-control p-3 border-success" placeholder="Option 1 (Yes)" required>
+                        <input type="text" name="pollOption2" class="form-control p-3 border-danger" placeholder="Option 2 (No)" required>
+                    </div>
+
+                    <button class="btn btn-outline-info btn-block py-2 mt-4">Create Poll!</button>
+                    <p class="text-muted mt-3">Your poll will be on wait for approval until it is released.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <% include ../partials/footer %>
