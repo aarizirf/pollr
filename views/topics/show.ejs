@@ -11,10 +11,15 @@
                     <p class="lead text-muted text-center">
                         <%= topic.description %>
                     </p>
-                    <button class="btn btn-outline-primary btn-lg btn-block">
-                        <span>
-                            <i class="fas fa-user-plus"></i>
-                        </span>Follow</button>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2 col-sm-12">
+                            <button class="btn btn-outline-success btn-lg btn-block">
+                                <span>
+                                    <i class="fas fa-user-plus"></i>
+                                </span>Follow
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,7 +27,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-4 col-sm-12 mb-5">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p class="display-5">
@@ -53,6 +58,7 @@
                 </ul>
             </div>
             <div class="col-md-8 col-sm-12">
+                <h3>Most Recent Polls</h3>
                 <% polls.forEach(function(poll) { %>
                     <div class="card mb-5">
                         <div class="card-header">
