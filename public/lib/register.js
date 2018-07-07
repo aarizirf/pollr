@@ -1,19 +1,19 @@
 
 
-var typingTimer;                //timer identifier
-var doneTypingInterval = 3000;  //time in ms 
+// var typingTimer;                //timer identifier
+// var doneTypingInterval = 3000;  //time in ms 
 
-$('#email').keyup(function(){
-    clearTimeout(typingTimer);
-    if ($('#email').val()) {
-        typingTimer = setTimeout(isEmailUnique, doneTypingInterval);
-    }
-});
+// $('#email').keyup(function(){
+//     clearTimeout(typingTimer);
+//     if ($('#email').val()) {
+//         typingTimer = setTimeout(isEmailUnique, doneTypingInterval);
+//     }
+// });
 
-function isEmailUnique () {
-    alert("you stopped typoing");
+// function isEmailUnique () {
+//     alert("you stopped typoing");
     
-}
+// }
 
 // Check if password meets requriement(feedback necessary)
 

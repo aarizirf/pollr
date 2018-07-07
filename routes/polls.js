@@ -6,13 +6,28 @@ var middleware = require("../middleware");
 
 //HOME ROUTE -- INDEX ROUTE FOR TOPICS FOLLOWED
 router.get("/polls/home", middleware.isLoggedIn, function(req, res) {
-  Poll.find({}, function(err, allPolls) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("polls/home", { polls: allPolls });
-    }
+  // Poll.find({}, function(err, allPolls) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.render("polls/home", { polls: allPolls });
+  //   }
+  // });
+
+  var pollsRender = [];
+  req.user.feed.forEach(function(poll) {
+    Poll.findById(poll.id, function(err, foundPoll) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(foundPoll);
+        pollsRender.push(foundPoll);
+      }
+    });
   });
+  console.log(pollsRender);
+
+  res.render("polls/home", { polls: pollsRender });
 });
 
 //NEW POLL ROUTE

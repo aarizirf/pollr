@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Topic = require("../models/topic");
 var Poll = require("../models/poll");
-var User = requrie("../models/user");
+var User = require("../models/user");
 var middleware = require("../middleware");
 
 //NEW TOPIC GET ROUTE
@@ -34,7 +34,6 @@ router.post("/topics/new", middleware.isLoggedIn, function(req, res) {
 
 //TOPIC INDEX SHOW GET ROUTE
 router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
-
   //USER IS GETTING HERE
   Topic.findOneAndUpdate(
     { name: req.params.name },
@@ -49,11 +48,14 @@ router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
           } else {
             var isFollowing = false;
 
-            Topic.count({ "followers": req.user, name: topic.name }, function(err, count) {
-              if(err) {
+            Topic.count({ followers: req.user, name: topic.name }, function(
+              err,
+              count
+            ) {
+              if (err) {
                 console.log(err);
               } else {
-                if(count > 0) {
+                if (count > 0) {
                   isFollowing = true;
                 } else {
                   isFollowing = false;
@@ -76,42 +78,66 @@ router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
 
 router.get("/topics/:name/follow", middleware.isLoggedIn, function(req, res) {
   //CHECK IF FOLLOWER ALREADY FOLLOWS HERE
-  Topic.findOneAndUpdate({ name: req.params.name }, { $push: { followers: req.user } }, function(err, topic) {
-    if(err) {
-      console.log(err);
-    } else if(topic) {
-      var _topic = {
-        id: topic._id,
-        name: topic.name
+  Topic.findOneAndUpdate(
+    { name: req.params.name },
+    { $push: { followers: req.user } },
+    function(err, topic) {
+      if (err) {
+        console.log(err);
+      } else if (topic) {
+        var _topic = {
+          id: topic._id,
+          name: topic.name
+        };
+        Poll.find({ topic: _topic }, function(err, polls) {
+          if (err) {
+            console.log(err);
+          } else {
+            polls.forEach(function(poll) {
+              req.user.feed.push(poll);
+            });
+            req.user.save(function(err) {
+              if (err) {
+                console.log(err);
+              }
+            });
+
+            //chronologicfally sort user polls
+
+            req.user.feed.sort(function(date1, date2) {
+              // This is a comparison function that will result in dates being sorted in
+              // DESCENDING order.
+              if (date1 > date2) return -1;
+              if (date1 < date2) return 1;
+              return 0;
+            });
+            //rsender page
+
+            console.log(req.user.feed);
+            res.redirect("/topics/" + req.params.name);
+          }
+        });
+      } else {
+        //no topic ofund
       }
-      Poll.find({ topic: _topic }, function(err, polls) {
-        if(err) {
-          console.log(err);
-        } else {
-          User.findOneAndUpdate({ _id: req.user._id }, { $push: { feed: polls }}, function(err, user) {
-            if(err) {
-              console.log(err);
-            } else {
-              //chronologicfally sort user polls
-              //render page 
-            }
-          });
-        }
-      });
     }
-  });
+  );
 });
 
 router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
   //remove follow from topic schema
   //CHECK IF FOLLOWER IS NOT FOLLOWING ALREADY
-  Topic.findOneAndUpdate({ name: req.params.name }, { $pull: { followers: req.user } }, function(err, topic) {
-    if(err) {
-      console.log(err);
-    } else if(topic) {
-      res.redirect("/topics/" + topic.name);
+  Topic.findOneAndUpdate(
+    { name: req.params.name },
+    { $pull: { followers: req.user } },
+    function(err, topic) {
+      if (err) {
+        console.log(err);
+      } else if (topic) {
+        res.redirect("/topics/" + topic.name);
+      }
     }
-  });
+  );
 });
 
 module.exports = router;
