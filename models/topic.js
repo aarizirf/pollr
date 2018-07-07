@@ -10,6 +10,15 @@ var TopicSchema = new mongoose.Schema({
     },
     username: String
   },
+  followers: [
+    {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      username: String
+    }
+  ],
   views: {
     type: Number,
     default: 0

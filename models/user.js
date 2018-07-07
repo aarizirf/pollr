@@ -5,6 +5,14 @@ var UserSchema = new mongoose.Schema({
   username: String,
   password: String,
   email: String,
+  feed: [
+    {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Poll"
+      },
+    } 
+  ],
 
   createdAt: {
     type: Date,

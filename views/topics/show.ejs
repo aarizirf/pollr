@@ -13,11 +13,19 @@
                     </p>
                     <div class="row">
                         <div class="col-md-8 offset-md-2 col-sm-12">
-                            <button class="btn btn-outline-success btn-lg btn-block">
-                                <span>
-                                    <i class="fas fa-user-plus"></i>
-                                </span>Follow
-                            </button>
+                            <% if(isFollowing === false) { %>
+                                <a href="/topics/<%= topic.name %>/follow/" class="btn btn-success btn-lg btn-block">
+                                    <span>
+                                        <i class="fas fa-user-plus"></i>
+                                    </span>Follow
+                                </a>
+                            <% } else { %>
+                                <a href="/topics/<%= topic.name %>/unfollow/" class="btn btn-outline-danger btn-lg btn-block">
+                                    <span>
+                                        <i class="fas fa-user-slash"></i>
+                                    </span>Unfollow
+                                </a>
+                            <% } %>               
                         </div>
                     </div>
                 </div>

@@ -81,7 +81,6 @@ router.post("/polls/:id/1", middleware.isLoggedIn, function(req, res) {
   //     id: req.user._id,
   //     username: req.user.username
   //   };
-  console.log("server working here");
   Poll.findByIdAndUpdate(
     req.params.id,
     {
@@ -91,7 +90,6 @@ router.post("/polls/:id/1", middleware.isLoggedIn, function(req, res) {
       if (err) {
         console.log(err);
       } else {
-        console.log(poll);
       }
     }
   );
