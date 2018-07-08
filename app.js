@@ -21,7 +21,7 @@ var topicRoutes = require("./routes/topics");
 var middleware = require("./middleware");
 
 mongoose.connect("mongodb://localhost/pollr");
-//clearDB();
+clearDB();
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));

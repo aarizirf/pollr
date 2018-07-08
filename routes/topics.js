@@ -77,6 +77,12 @@ router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
 //////////MAKE SURE TO MAKE THE GET HAPPEN IN JQUERY SO THAT PAGE VIEWS IS NOT COUNTED AGAIN // LATER ON WHEN APP ALMOSAT COMPLETE
 
 router.get("/topics/:name/follow", middleware.isLoggedIn, function(req, res) {
+  //what we are doing
+  //    1)updating topics follower with current user
+  //    2)finding all polls with the topic
+  //    3)pushing those polls into users feed, and saving
+  //    4)chronologically sorting feed, and then rendering page
+
   //CHECK IF FOLLOWER ALREADY FOLLOWS HERE
   Topic.findOneAndUpdate(
     { name: req.params.name },
@@ -94,16 +100,18 @@ router.get("/topics/:name/follow", middleware.isLoggedIn, function(req, res) {
             console.log(err);
           } else {
             polls.forEach(function(poll) {
-              req.user.feed.push(poll);
+              var pollPush = {
+                id: poll._id,
+                createdAt: poll.createdAt
+              };
+              req.user.feed.push(pollPush);
             });
             req.user.save(function(err) {
               if (err) {
                 console.log(err);
               }
             });
-
             //chronologicfally sort user polls
-
             req.user.feed.sort(function(date1, date2) {
               // This is a comparison function that will result in dates being sorted in
               // DESCENDING order.
@@ -127,6 +135,13 @@ router.get("/topics/:name/follow", middleware.isLoggedIn, function(req, res) {
 router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
   //remove follow from topic schema
   //CHECK IF FOLLOWER IS NOT FOLLOWING ALREADY
+  //what we are doing
+  //    1)updating topics follower removing current user
+  //    2)finding all polls with the topic
+  //    3)pulling those polls into users feed, and saving
+  //    4)chronologically sorting feed, and then rendering page
+
+  //CHECK IF FOLLOWER ALREADY FOLLOWS HERE
   Topic.findOneAndUpdate(
     { name: req.params.name },
     { $pull: { followers: req.user } },
@@ -134,7 +149,43 @@ router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
       if (err) {
         console.log(err);
       } else if (topic) {
-        res.redirect("/topics/" + topic.name);
+        var _topic = {
+          id: topic._id,
+          name: topic.name
+        };
+        Poll.find({ topic: _topic }, function(err, polls) {
+          if (err) {
+            console.log(err);
+          } else {
+            //removing polls from feed
+            polls.forEach(function(poll, index) {
+              var pollPull = {
+                id: poll._id,
+                createdAt: poll.createdAt
+              };
+              req.user.feed.splice(pollPull, index);
+            });
+            req.user.save(function(err) {
+              if (err) {
+                console.log(err);
+              }
+            });
+            //chronologicfally sort user polls
+            req.user.feed.sort(function(date1, date2) {
+              // This is a comparison function that will result in dates being sorted in
+              // DESCENDING order.
+              if (date1 > date2) return -1;
+              if (date1 < date2) return 1;
+              return 0;
+            });
+            //rsender page
+
+            console.log(req.user.feed);
+            res.redirect("/topics/" + req.params.name);
+          }
+        });
+      } else {
+        //no topic ofund
       }
     }
   );
