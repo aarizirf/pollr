@@ -3,28 +3,29 @@ var router = express.Router();
 var Poll = require("../models/poll");
 var Topic = require("../models/topic");
 var middleware = require("../middleware");
+var mongoose = require("mongoose");
 
 //HOME ROUTE -- INDEX ROUTE FOR TOPICS FOLLOWED
 router.get("/polls/home", middleware.isLoggedIn, function(req, res) {
   var pollsRender = [];
+  var pollsArrayID = [];
 
   req.user.feed.forEach(function(poll) {
-    Poll.findById(poll._id, function(err, foundPoll) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (foundPoll) {
-          console.log(foundPoll);
-          pollsRender.push(foundPoll);
-          if (pollsRender.length == req.user.feed.length) {
-            res.render("polls/home", { polls: pollsRender });
-          }
-        } else {
-          res.render("polls/home", { polls: [] });
-        }
-      }
-    });
+    pollsArrayID.push(poll.id);
   });
+
+  var promise = Poll.find({ _id: { $in: pollsArrayID } }).exec();
+  promise
+    .then(function(poll) {
+      pollsRender.push(poll);
+      return;
+    })
+    .then(function(poll) {
+      res.render("polls/home", { polls: pollsRender });
+    })
+    .catch(function(err) {
+      console.log("error: " + err);
+    });
 });
 
 //NEW POLL ROUTE

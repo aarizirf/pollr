@@ -1,3 +1,7 @@
+body {
+  /* font-family: "Archivo Narrow", sans-serif; */
+}
+
 .navbar .nav-link {
   font-size: 14px;
   text-transform: uppercase;
@@ -5,7 +9,7 @@
   padding-right: 1rem !important;
 }
 
-.navbar .nav-item.active {
+.left-border {
   border-left: #444 3px solid;
 }
 

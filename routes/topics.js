@@ -32,6 +32,20 @@ router.post("/topics/new", middleware.isLoggedIn, function(req, res) {
   });
 });
 
+router.get("/topics/search", function(req, res) {
+  const regex = new RegExp(escapeRegex(req.query.search), "gi");
+  Topic.find({ name: regex }, function(err, foundTopics) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("topics/search", {
+        topics: foundTopics,
+        query: req.query.search
+      });
+    }
+  });
+});
+
 //TOPIC INDEX SHOW GET ROUTE
 router.get("/topics/:name", middleware.isLoggedIn, function(req, res) {
   //USER IS GETTING HERE
@@ -120,8 +134,6 @@ router.get("/topics/:name/follow", middleware.isLoggedIn, function(req, res) {
               return 0;
             });
             //rsender page
-
-            console.log(req.user.feed);
             res.redirect("/topics/" + req.params.name);
           }
         });
@@ -158,12 +170,13 @@ router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
             console.log(err);
           } else {
             //removing polls from feed
-            polls.forEach(function(poll, index) {
-              var pollPull = {
-                id: poll._id,
-                createdAt: poll.createdAt
-              };
-              req.user.feed.splice(pollPull, index);
+            polls.forEach(function(poll) {
+              req.user.feed.forEach(function(feedPoll, i) {
+                if (feedPoll.id.toString() === poll._id.toString()) {
+                  console.log(i);
+                  req.user.feed.splice(i, 1);
+                }
+              });
             });
             req.user.save(function(err) {
               if (err) {
@@ -179,8 +192,6 @@ router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
               return 0;
             });
             //rsender page
-
-            console.log(req.user.feed);
             res.redirect("/topics/" + req.params.name);
           }
         });
@@ -190,5 +201,9 @@ router.get("/topics/:name/unfollow", middleware.isLoggedIn, function(req, res) {
     }
   );
 });
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;
