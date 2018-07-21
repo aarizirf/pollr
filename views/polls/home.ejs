@@ -3,17 +3,53 @@
 
 
     <div class="container">
-        <h1>Home page</h1>
-
-
-        <div class="form-inline mt-5">
-            <input class="form-control mr-2 question-input" type="text" name="question" placeholder="Question">
-            <input class="btn btn-info submit-poll" type="submit" value="Create poll">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="text-center">Your Feed:</h1>
+            </div>
         </div>
+
+        <% var keys = Object.keys(polls) %>
+
+            <% keys.forEach(function(key) { %>
+                <div class="card mb-5">
+                    <div class="card-header">
+                        Created by
+                        <strong>
+                            <%= polls[key].author.username %>
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title text-center">
+                            <%= polls[key].question %>
+                        </h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 offset-md-3">
+                                <div class="input-group" id="<%= key %>">
+                                    <button class="option1 form-control btn btn-outline-dark py-3">
+                                        <%= polls[key].option1.text %>
+                                    </button>
+                                    <button class="option2 form-control btn btn-outline-dark py-3">
+                                        <%= polls[key].option2.text %>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <a class="badge badge-pill badge-success" href="#">topic</a>
+                            <span class="badge badge-pill badge-info">
+                                <%= polls[key].option1.votes + polls[key].option2.votes %>
+                                    votes
+                            </span>
+                            <span class="badge badge-pill badge-dark">
+                                <%= moment(polls[key].createdAt).fromNow() %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
     </div>
 
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script src="lib/newPoll.js"></script>
+
 
     <% include ../partials/footer %>
