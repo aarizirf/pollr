@@ -1,3 +1,6 @@
+var topicName;
+var topicKey;
+
 function addPoll() {
   var database = firebase.database();
   var pollsRef = database.ref("/polls");
@@ -11,10 +14,6 @@ function addPoll() {
   pollsRef
     .push({
       question: question,
-      author: {
-        uid: currentUser.uid,
-        username: currentUser.displayName
-      },
       option1: {
         text: option1,
         votes: 0
@@ -23,6 +22,15 @@ function addPoll() {
         text: option2,
         votes: 0
       },
+      topic: {
+        id: topicKey,
+        name: topicName
+      },
+      author: {
+        uid: currentUser.uid,
+        username: currentUser.displayName
+      },
+      isApproved: false,
       createdAt: new Date().getTime()
     })
     .then(function() {
@@ -36,4 +44,17 @@ function addPoll() {
 
 $(".submit-poll").on("click", function() {
   addPoll();
+});
+
+$(".topic-choice").on("click", function() {
+  $(".topic-choice").removeClass("active");
+  topicName = $(this).attr("name");
+  topicKey = $(this).attr("key");
+  $(this).addClass("active");
+});
+
+$(".choose-topic-button").on("click", function() {
+  if (topicName) {
+    $(".topic-model-open-button").text(topicName);
+  }
 });

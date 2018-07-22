@@ -8,35 +8,47 @@ function vote(button, option) {
     .child("/option" + option)
     .child("/votes")
     .transaction(function(votes) {
-      votes = votes + 1;
-      return votes;
-    });
-
-  var option1Votes;
-  var option2Votes;
-
-  pollRef
-    .child("/option1")
-    .child("/votes")
-    .on("value", function(snapshot) {
-      console.log(snapshot.val());
-      option1Votes = snapshot.val();
-      console.log(option1Votes);
-      button.text(option1Votes);
-    });
-
-  pollRef
-    .child("/option2")
-    .child("/votes")
-    .once("value", function(snapshot) {
-      option2Votes = snapshot.val();
+      return votes + 1;
     });
 }
 
 $(".option1").on("click", function() {
   vote($(this), 1);
+
+  option1Votes = parseInt($(this).attr("votes")) + 1;
+  option2Votes = parseInt(
+    $(this)
+      .siblings()
+      .attr("votes")
+  );
+
+  $(this).text(
+    Math.round((option1Votes / (option1Votes + option2Votes)) * 100) + "%"
+  );
+  $(this)
+    .siblings()
+    .text(
+      Math.round((option2Votes / (option1Votes + option2Votes)) * 100) + "%"
+    );
 });
 
 $(".option2").on("click", function() {
   vote($(this), 2);
+
+  option2Votes = parseInt($(this).attr("votes"));
+  option1Votes =
+    parseInt(
+      $(this)
+        .siblings()
+        .attr("votes")
+    ) + 1;
+
+  $(this).text(
+    Math.round((option2Votes / (option1Votes + option2Votes)) * 100) + "%"
+  );
+  $(this)
+    .siblings()
+    .text(
+      Math.round((option1Votes / (option1Votes + option2Votes)) * 100) + "%"
+    );
 });

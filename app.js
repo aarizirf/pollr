@@ -1,6 +1,6 @@
 var express = require("express"),
-  app = express(),
-  bodyParser = require("body-parser");
+    app = express(),
+    bodyParser = require("body-parser");
 
 //ROUTES
 var pollRoutes = require("./routes/polls");
@@ -26,26 +26,12 @@ app.use(express.static(__dirname + "/public"));
 //INCLUDE ROUTES
 app.use(pollRoutes);
 app.use(userRoutes);
-// app.use(topicRoutes);
+app.use(topicRoutes);
 
 app.get("/", function(req, res) {
-  res.redirect("/home");
+    res.redirect("/home");
 });
 
-// app.get("/home", function(req, res) {
-//   var pollsRef = database.ref("/polls");
-
-//   pollsRef.once("value", function(snapshot) {
-//     var polls = snapshot.val();
-
-//     if (!polls) {
-//       polls = {};
-//     }
-
-//     res.render("polls/home", { polls: polls });
-//   });
-// });
-
 app.listen(5500, function() {
-  console.log("App running on port 5500");
+    console.log("App running on port 5500");
 });

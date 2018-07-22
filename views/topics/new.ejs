@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+
+    <div class="container mt-3">
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-sm-12">
+                <h1>Create a Topic</h1>
+
+                <div class="input-group mt-3">
+                    <input class="form-control topic-name-input" type="text" name="name" placeholder="Topic Name">
+                </div>
+                <div class="mt-3">
+                    <textarea class="form-control topic-description-input" rows="3" name="description" placeholder="Topic Description"></textarea>
+                </div>
+                <input class="btn btn-block btn-info submit-topic mt-4" type="submit" value="Create Topic">
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous "></script>
+    <script src="/lib/newTopic.js"></script>
+
+    <% include ../partials/footer %>

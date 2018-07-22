@@ -2,7 +2,7 @@
 
 
 
-    <div class="container">
+    <div class="container mt-3">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 class="text-center">Your Feed:</h1>
@@ -26,17 +26,19 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6 offset-md-3">
                                 <div class="input-group" id="<%= key %>">
-                                    <button class="option1 form-control btn btn-outline-dark py-3">
+                                    <button votes="<%= polls[key].option1.votes %>" class="option1 form-control btn btn-outline-dark py-3">
                                         <%= polls[key].option1.text %>
                                     </button>
-                                    <button class="option2 form-control btn btn-outline-dark py-3">
+                                    <button votes="<%= polls[key].option2.votes %>" class="option2 form-control btn btn-outline-dark py-3">
                                         <%= polls[key].option2.text %>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-2">
-                            <a class="badge badge-pill badge-success" href="#">topic</a>
+                            <a class="badge badge-pill badge-success" href="/topics/<%= polls[key].topic.id %>">
+                                <%= polls[key].topic.name %>
+                            </a>
                             <span class="badge badge-pill badge-info">
                                 <%= polls[key].option1.votes + polls[key].option2.votes %>
                                     votes
