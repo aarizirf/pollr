@@ -8,6 +8,13 @@ router.get("/topics/new", function(req, res) {
   res.render("topics/new");
 });
 
+var userUid;
+
+router.post("/currentUser/:uid", function(req, res) {
+  userUid = req.params.uid;
+  console.log("CURRENT USER FILLED");
+});
+
 router.get("/topics/:id", function(req, res) {
   var key = req.params.id;
 
@@ -26,24 +33,24 @@ router.get("/topics/:id", function(req, res) {
         }
       });
 
+      var isFollowing = false;
+      console.log(topic.followers);
+      console.log("break in between");
+      if (topic.followers && topic.followers.includes(userUid)) {
+        isFollowing = true;
+      }
+      console.log(topic.followers);
+      console.log(userUid);
+      console.log(isFollowing);
+
       res.render("topics/show", {
         topic: topic,
         topicKey: key,
         moment: moment,
-        polls: pollsArray
+        polls: pollsArray,
+        isFollowing: isFollowing
       });
     });
-  });
-});
-
-router.get("/topics/:id/follow", function(req, res) {
-  var key = req.params.id;
-
-  var topicRef = database.ref("/topics").child(key);
-  topicRef.on("value", function(topicSnapshot) {
-    var topic = topicSnapshot.val();
-    console.log(firebase.auth().currentUser);
-    // if(topic.followers.includes(firebase.auth().currentUser.uid))
   });
 });
 

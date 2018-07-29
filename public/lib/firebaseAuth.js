@@ -20,6 +20,7 @@ window.onload = function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       console.log("user is signed in " + user.displayName);
+      $.post("/currentUser/" + user.uid);
     } else {
       var url = $(location).attr("href");
       if (url != "http://localhost:5500/login") {

@@ -1,6 +1,6 @@
 var express = require("express"),
-    app = express(),
-    bodyParser = require("body-parser");
+  app = express(),
+  bodyParser = require("body-parser");
 
 //ROUTES
 var pollRoutes = require("./routes/polls");
@@ -29,9 +29,9 @@ app.use(userRoutes);
 app.use(topicRoutes);
 
 app.get("/", function(req, res) {
-    res.redirect("/home");
+  res.redirect("/home");
 });
 
 app.listen(5500, function() {
-    console.log("App running on port 5500");
+  console.log("App running on port 5500");
 });
