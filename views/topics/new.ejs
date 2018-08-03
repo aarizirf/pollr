@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-sm-12">
+        <h1>Create a Topic</h1>
+
+        <!-- TOPIC NAME -->
+        <div class="input-group mt-3">
+          <input class="form-control topic-name-input border-dark" type="text" name="Topic name" placeholder="Topic name">
+        </div>
+
+        <!-- MODAL -->
+        <div class="row">
+          <div class="col-sm-12 col-md-6 offset-md-3">
+
+            <!-- SUBMIT POLL -->
+            <input class="btn btn-block btn-info submit-topic mt-3" type="submit" value="Create topic">
+          </div>
+        </div>
+
+
+      </div>
+
+      <% include ../partials/scripts %>
+
+        <script src="/lib/newTopic.js"></script>
+
+        <% include ../partials/footer %>

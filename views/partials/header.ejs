@@ -14,8 +14,24 @@
 </head>
 
 <body>
-
-  <div class="mb-2">
-    <a class="google-sign-out btn btn-outline-dark">Sign out</a>
-    <a href="/polls/new" class="btn btn-success ml-2">New Poll</a>
-  </div>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light mb-3">
+    <div class="container">
+      <a class="navbar-brand" href="#">pollr.io</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/topics/new">new topic</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/polls/new">new poll</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link google-sign-out" href="#">sign out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

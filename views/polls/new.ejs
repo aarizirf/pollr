@@ -27,7 +27,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-6 offset-md-3">
 
-            <!-- <h5 class="mt-3">Topic:</h5>
+            <h5 class="mt-3">Topic:</h5>
 
 
             <button type="button" class="btn btn-light btn-block topic-model-open-button" data-toggle="modal" data-target="#exampleModal">
@@ -44,32 +44,30 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body"> TOPICS HERE
-            <ul class="list-group">
-              <li class="list-group-item topic-choice">
-                hello
-              </li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary choose-topic-button" data-dismiss="modal">Choose</button>
+                  <div class="modal-body">
+                    <ul class="list-group topics">
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary choose-topic-button" data-dismiss="modal">Choose</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- SUBMIT POLL -->
+        <input class="btn btn-block btn-info submit-poll mt-3" type="submit" value="Create poll">
       </div>
     </div>
+
+
   </div>
-  </div> -->
 
-            <!-- SUBMIT POLL -->
-            <input class="btn btn-block btn-info submit-poll mt-3" type="submit" value="Create poll">
-          </div>
-        </div>
+  <% include ../partials/scripts %>
 
+    <script src="/lib/newPoll.js"></script>
+    <script src="/lib/selectTopic.js"></script>
 
-      </div>
-
-      <% include ../partials/scripts %>
-
-        <script src="/lib/newPoll.js"></script>
-
-        <% include ../partials/footer %>
+    <% include ../partials/footer %>

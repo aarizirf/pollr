@@ -11,7 +11,8 @@ $(".submit-poll").on("click", function() {
       question: questionText,
       option1: { text: option1Text },
       option2: { text: option2Text },
-      author: userUid
+      author: userUid,
+      createdAt: new Date()
     })
     .then(function() {
       window.location.href = "/home";
