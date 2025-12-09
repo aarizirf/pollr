@@ -1,9 +1,11 @@
 {
   "name": "pollr",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple polling application built with Express and Firebase",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
