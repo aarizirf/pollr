@@ -13,9 +13,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log(user.displayName + " is signed in");
   } else {
     //redirect to login if not already on page
-    if ($(location).attr("href") != "http://localhost:5500/login") {
+    if (window.location.pathname !== "/login") {
       console.log(window.location.href);
-      window.location.href = "http://localhost:5500/login";
+      window.location.href = "/login";
     }
   }
 });
