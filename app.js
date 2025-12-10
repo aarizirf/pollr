@@ -18,6 +18,7 @@ app.get("/", function(req, res) {
   res.redirect("/home");
 });
 
-app.listen(5500, function() {
-  console.log("App running on port 5500");
+const PORT = process.env.PORT || 5500;
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT);
 });
